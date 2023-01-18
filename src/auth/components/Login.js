@@ -1,13 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
+import axios from 'axios';
 
 function LoginForm() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    document.title = "Login : Ilara Pharmacy";
+  }, []);
 
   function handleSubmit(event) {
     event.preventDefault();
+
+    // Collect form data
+    const formData = new FormData(event.target);
+    const email = formData.get("email");
+    const password = formData.get("password");
+
     // Perform login logic here
     console.log(email, password);
+
+    // Send request to Django API
+    axios
+      .post("auth/login/", {
+        email: email,
+        password: password,
+      })
+      .then((response) => {
+        console.log(response);
+        // Handle successful login
+      })
+      .catch((error) => {
+        console.log(error);
+        // Handle login error
+      });
   }
 
   return (
@@ -19,6 +45,7 @@ function LoginForm() {
         </label>
         <input
           className="bg-gray-200 border border-gray-300 rounded-lg p-2 w-full"
+          name="email"
           type="email"
           id="email"
           value={email}
@@ -26,12 +53,16 @@ function LoginForm() {
         />
       </div>
       <div className="mb-4">
-        <label className="block text-gray-700 font-medium mb-2" htmlFor="password">
+        <label
+          className="block text-gray-700 font-medium mb-2"
+          htmlFor="password"
+        >
           Password
         </label>
         <input
           className="bg-gray-200 border border-gray-300 rounded-lg p-2 w-full"
           type="password"
+          name="password"
           id="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}

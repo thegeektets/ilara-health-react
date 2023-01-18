@@ -10,7 +10,6 @@ const ComponentView = () => {
   const [currentPage] = useState("login");
   return (
     <div className="container mx-auto">
-      {currentPage}
       {currentPage === "login" && <Login />}
       {currentPage === "logout" && <Logout />}
 

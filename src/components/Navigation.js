@@ -14,9 +14,11 @@ const Navigation = () => {
   }, []);
 
   return (
-    <nav className="bg-gray-800">
-      <div className="container mx-auto">
-        <ul className="flex items-center justify-between p-4">
+<aside class="w-64" aria-label="Sidebar">
+   <div class="px-3 py-4 overflow-y-auto rounded bg-gray-50 dark:bg-gray-800">
+   <nav className="bg-gray-800">
+
+      <ul class="space-y-2">
           <li className="text-white">
             <Link to="/">Home</Link>
           </li>
@@ -53,8 +55,9 @@ const Navigation = () => {
             </li>
           )}
         </ul>
-      </div>
-    </nav>
+      </nav>
+    </div>
+    </aside>
   );
 };
 
