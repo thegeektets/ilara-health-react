@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { } from "react";
 import Customers from "../customers/components/CustomerList";
 import Orders from "../orders/components/OrderList";
 import Checkout from "../checkout/components/Checkout";
@@ -11,7 +11,6 @@ const ComponentView = () => {
   const currentPage = useSelector((state) => state.nav.currentPage);
   return (
     <div className="container mx-auto">
-      {currentPage}
       {currentPage === "login" && <Login />}
       {currentPage === "logout" && <Logout />}
 

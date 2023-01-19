@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
 import { connect ,useDispatch} from 'react-redux';
 import { setLoggedIn, setToken  } from '../actions/authActions';
 import { setCurrentPage  } from '../../actions/navigationActions';

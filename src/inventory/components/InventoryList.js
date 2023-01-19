@@ -11,8 +11,8 @@ const InventoryList = () => {
   const [inventory, setInventory] = useState([]);
   const [editingItem, setEditingItem] = useState(null);
   const [showForm, setShowForm] = useState(false);
-
   useEffect(() => {
+    document.title = "Inventory : Ilara Pharmacy";
     console.log("loading inventory products");
     axios
       .get("inventory/products/")

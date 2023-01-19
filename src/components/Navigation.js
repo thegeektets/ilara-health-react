@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { connect, useSelector, useDispatch } from "react-redux";
 import { setCurrentPage } from "../actions/navigationActions";
@@ -10,7 +10,7 @@ const mapStateToProps = (state) => ({
 
 const Navigation = () => {
   const dispatch = useDispatch();
-  const [user, setUser] = useState(null);
+  const [user] = useState(null);
   const currentPage = useSelector((state) => state.nav.currentPage);
   const loggedIn = useSelector((state) => state.auth.loggedIn);
 

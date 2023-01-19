@@ -13,7 +13,8 @@ const CustomerList = () => {
   const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
-    console.log("loading inventory products");
+    document.title = "Customers : Ilara Pharmacy";
+
     axios
       .get("customer/customers/")
       .then((res) => {
