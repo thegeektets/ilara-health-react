@@ -1,26 +1,42 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import InventoryItem from "./InventoryItem";
 import EditForm from "./EditForm";
+import AddItemForm from "./AddItemForm";
+
 import { connect } from "react-redux";
 import { fetchItems, editItem, saveItem } from "../actions/inventoryActions";
+
 const InventoryList = () => {
   const [inventory, setInventory] = useState([]);
   const [editingItem, setEditingItem] = useState(null);
+  const [showForm, setShowForm] = useState(false);
+
+  const handleAdd = () => {
+    setShowForm(true);
+  };
+  const handleSaveNewItem = (newItem) => {
+    setInventory([...inventory, newItem]);
+    setShowForm(false);
+  };
+  const handleCancel = () => {
+    setShowForm(false);
+  };
 
   useEffect(() => {
     console.log("loading inventory products");
-    
-    fetch("https://my-inventory-api.com/items")
-      .then((res) => res.json())
-      .then((data) => {
-        const items = data.map(
+    axios
+      .get("inventory/products/")
+      .then((res) => {
+        const items = res.data.map(
           (item) =>
             new InventoryItem(
               item.id,
               item.name,
               item.description,
               item.price,
-              item.quantity
+              item.quantity,
+              item.category
             )
         );
         setInventory(items);
@@ -48,27 +64,38 @@ const InventoryList = () => {
   return (
     <div>
       <h1>Inventory List</h1>
+      <button className="bg-green-500 text-white p-2" onClick={handleAdd}>
+        Add New
+      </button>
+      {showForm && (
+        <AddItemForm onSave={handleSaveNewItem} onCancel={handleCancel} />
+      )}
+
       {inventory.length ? (
-        <table>
+        <table className="table-auto">
           <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Description</th>
-              <th>Price</th>
-              <th>Quantity</th>
-              <th>Actions</th>
+            <tr className="bg-gray-200">
+              <th className="px-4 py-2">ID</th>
+              <th className="px-4 py-2">Name</th>
+              <th className="px-4 py-2">Description</th>
+              <th className="px-4 py-2">Price</th>
+              <th className="px-4 py-2">Quantity</th>
+              <th className="px-4 py-2">Category</th>
+
+              <th className="px-4 py-2">Actions</th>
             </tr>
           </thead>
           <tbody>
             {inventory.map((item) => (
-              <tr key={item.id}>
-                <td>{item.id}</td>
-                <td>{item.name}</td>
-                <td>{item.description}</td>
-                <td>{item.price}</td>
-                <td>{item.quantity}</td>
-                <td>
+              <tr key={item.id} className="bg-white">
+                <td className="border px-4 py-2">{item.id}</td>
+                <td className="border px-4 py-2">{item.name}</td>
+                <td className="border px-4 py-2">{item.description}</td>
+                <td className="border px-4 py-2">{item.price}</td>
+                <td className="border px-4 py-2">{item.quantity}</td>
+                <td className="border px-4 py-2">{item.category.name}</td>
+
+                <td className="border px-4 py-2">
                   {editingItem === item.id ? (
                     <EditForm
                       item={item}
@@ -77,11 +104,19 @@ const InventoryList = () => {
                     />
                   ) : (
                     <>
-                      <button onClick={() => handleEdit(item.id)}>Edit</button>
-                      <button>Delete</button>
+                      <button
+                        className="bg-blue-500 text-white p-2"
+                        onClick={() => handleEdit(item.id)}
+                      >
+                        Edit
+                      </button>
+                      <button className="bg-red-500 text-white p-2">
+                        Delete
+                      </button>
                     </>
                   )}
                 </td>
+
               </tr>
             ))}
           </tbody>

@@ -6,7 +6,7 @@ This is a react project for a pharmacy checkout ui
 
 The application is structured by features, each feature having its own directory that contains the React components, actions, and reducers related to that feature.
 
-### Routes
+### Pages
 - `/` : Home page 
 - `/inventory` : Inventory page, it shows the list of items
 - `/inventory/:id` : Inventory item detail page, it shows the detail of a specific item

@@ -1,13 +1,32 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 const EditForm = ({ item, onSave, onCancel }) => {
   const [name, setName] = useState(item.name);
   const [description, setDescription] = useState(item.description);
   const [price, setPrice] = useState(item.price);
   const [quantity, setQuantity] = useState(item.quantity);
+  const [formData, setFormData] = useState({
+    name: name,
+    description: description,
+    price: price,
+    quantity: quantity
+  });
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    axios.put('/inventory/products' + item.id, {
+        name: name,
+        description: description,
+        price: price,
+        quantity: quantity
+    })
+    .then(response => {
+        onSave({ ...formData });
+    })
+    .catch(error => {
+        console.log(error);
+    });
     onSave({
       id: item.id,
       name,
@@ -54,6 +73,9 @@ const EditForm = ({ item, onSave, onCancel }) => {
           onChange={(event) => setQuantity(event.target.value)}
         />
       </label>
+      <br />
+      <button type="submit" className="bg-green-500 text-white p-2">Save</button>
+      <button type="button" onClick={onCancel} className="bg-red-500 text-white p-2">Cancel</button>
     </form>
   );
 };
