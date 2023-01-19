@@ -6,7 +6,7 @@ function OrderForm({ handleNewOrder }) {
   const [formData, setFormData] = useState({
     order_items: [],
     customer: "",
-    status: 1,
+    status: { id: 1, name: "New" },
     price: 0,
   });
   const [products, setProducts] = useState([]);
@@ -42,7 +42,11 @@ function OrderForm({ handleNewOrder }) {
 
   const handleRemove = (index) => {
     const updatedOrderItems = [...formData.order_items];
-    formData.price -= parseInt(updatedOrderItems[index].total);
+    formData.price =
+      parseFloat(formData.price) -
+      parseFloat(
+        updatedOrderItems[index].total ? updatedOrderItems[index].total : 0
+      );
 
     updatedOrderItems.splice(index, 1);
     setFormData({
@@ -79,16 +83,19 @@ function OrderForm({ handleNewOrder }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("handleSubmit", formData)
-
+    console.log("handleSubmit", formData);
+    let customer = isJSON(formData.customer)
+      ? JSON.parse(formData.customer)
+      : formData.customer;
+    formData.customer = customer;
     axios
       .post("/order/orders/", formData)
       .then((res) => {
-        handleNewOrder(formData);
+        handleNewOrder(res.data);
         setFormData({
           order_items: [],
           customer: "",
-          status: "",
+          status: { id: 1, name: "New" },
           price: "",
           quantity: "",
         });
@@ -193,7 +200,7 @@ function OrderForm({ handleNewOrder }) {
         >
           <option></option>
           {customers.map((customer) => (
-            <option key={customer.id} value={customer.id}>
+            <option key={customer.id} value={JSON.stringify(customer)}>
               {`${customer.first_name} ${customer.last_name}`}
             </option>
           ))}
@@ -216,7 +223,9 @@ function OrderForm({ handleNewOrder }) {
 
       <button
         className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-red-600"
-        type="submit">
+        type="submit"
+        onClick={handleSubmit}
+      >
         Create Order
       </button>
     </form>

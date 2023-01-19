@@ -30,25 +30,31 @@ function OrderList() {
   }, []);
 
   const handleNewOrder = (orderItems) => {
-    console.log("orderItems", orderItems);
-    
-    setOrders([...orders, { orderItems }]);
+    let item = new OrderItem(orderItems.id,orderItems.customer, orderItems.status, orderItems.price,orderItems.order_items );
+    setOrders([...orders,  item ]);
   };
+  const getTotal = () => {
+    let total = 0;
+    for (let i = 0; i < orders.length; i++) {
+      total += orders[i]["price"];
+    }
+    return total;
+  };
+  const checkoutOrders = () => {};
 
   const handleRemoveOrder = (index) => {
     const updatedOrders = [...orders];
 
-
-    let orderId = updatedOrders[index]['id'];
+    let orderId = updatedOrders[index]["id"];
 
     updatedOrders.splice(index, 1);
     setOrders(updatedOrders);
     try {
-        const response = axios.delete(`/order/orders/${orderId}`);
-        console.log(response);
-      } catch (error) {
-        console.error(error);
-      }
+      const response = axios.delete(`/order/orders/${orderId}`);
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -65,25 +71,25 @@ function OrderList() {
       <table className="table-auto mt-4">
         <thead>
           <tr>
-            <th class="px-4 py-2">ID</th>
-            <th class="px-4 py-2">Customer</th>
-            <th class="px-4 py-2">Price</th>
-            <th class="px-4 py-2">Order Items</th>
-            <th class="px-4 py-2">Status</th>
-            <th class="px-4 py-2">Actions</th>
+            <th className="px-4 py-2">ID</th>
+            <th className="px-4 py-2">Customer</th>
+            <th className="px-4 py-2">Price</th>
+            <th className="px-4 py-2">Order Items</th>
+            <th className="px-4 py-2">Status</th>
+            <th className="px-4 py-2">Actions</th>
           </tr>
         </thead>
         <tbody>
           {orders.map((item, index) => (
             <tr key={item.id}>
-              <td class="border px-4 py-2">{item.id}</td>
-              <td class="border px-4 py-2">
+              <td className="border px-4 py-2">{item.id}</td>
+              <td className="border px-4 py-2">
                 {item.customer
                   ? `${item.customer.first_name} ${item.customer.last_name}`
                   : ""}
               </td>
-              <td class="border px-4 py-2">{item.price}</td>
-              <td class="border px-4 py-2">
+              <td className="border px-4 py-2">{item.price}</td>
+              <td className="border px-4 py-2">
                 {Array.isArray(item.order_items) ? (
                   <table>
                     <thead>
@@ -107,7 +113,7 @@ function OrderList() {
                   <div>Order items not available</div>
                 )}
               </td>
-              <td class="border px-4 py-2">
+              <td className="border px-4 py-2">
                 {item.status ? item.status.name : "New"}
               </td>
               <td>
@@ -125,6 +131,25 @@ function OrderList() {
           ))}
         </tbody>
       </table>
+      <div
+        style={{
+          display: "inline-block",
+          fontWeight: "bold",
+          fontSize: "21px",
+        }}
+      >
+        Total : {getTotal()}
+      </div>
+      <button
+        style={{ float: "right", marginRight: "50px" }}
+        className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-red-600"
+        onClick={(event) => {
+          event.preventDefault();
+          checkoutOrders();
+        }}
+      >
+        Checkout Orders
+      </button>
     </div>
   );
 }
