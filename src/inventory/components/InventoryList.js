@@ -12,17 +12,6 @@ const InventoryList = () => {
   const [editingItem, setEditingItem] = useState(null);
   const [showForm, setShowForm] = useState(false);
 
-  const handleAdd = () => {
-    setShowForm(true);
-  };
-  const handleSaveNewItem = (newItem) => {
-    setInventory([...inventory, newItem]);
-    setShowForm(false);
-  };
-  const handleCancel = () => {
-    setShowForm(false);
-  };
-
   useEffect(() => {
     console.log("loading inventory products");
     axios
@@ -46,8 +35,31 @@ const InventoryList = () => {
       });
   }, []);
 
+  const handleAdd = () => {
+    setShowForm(true);
+  };
+  const handleSaveNewItem = (newItem) => {
+    setInventory([...inventory, newItem]);
+    setShowForm(false);
+  };
+  const handleCancel = () => {
+    setShowForm(false);
+  };
+
   const handleEdit = (itemId) => {
     setEditingItem(itemId);
+  };
+
+  const handleDelete = (itemId) => {
+    axios
+      .delete(`inventory/products/${itemId}/`)
+      .then(() => {
+        const updatedInventory = inventory.filter((item) => item.id !== itemId);
+        setInventory(updatedInventory);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   const handleSave = (itemId, updatedItem) => {
@@ -110,13 +122,15 @@ const InventoryList = () => {
                       >
                         Edit
                       </button>
-                      <button className="bg-red-500 text-white p-2">
+                      <button
+                        className="bg-red-500 text-white p-2"
+                        onClick={() => handleDelete(item.id)}
+                      >
                         Delete
                       </button>
                     </>
                   )}
                 </td>
-
               </tr>
             ))}
           </tbody>

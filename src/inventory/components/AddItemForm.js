@@ -13,7 +13,7 @@ const AddItemForm = ({ onSave, onCancel }) => {
     description: description,
     price: price,
     quantity: quantity,
-    category: selectedCategory
+    category: selectedCategory,
   });
   useEffect(() => {
     axios
@@ -35,12 +35,13 @@ const AddItemForm = ({ onSave, onCancel }) => {
     event.preventDefault();
     formData.category = JSON.parse(selectedCategory);
     console.log("formData", formData);
-    
+
     axios
       .post("inventory/products/", {
-        ...formData
+        ...formData,
       })
       .then((response) => {
+        formData.id = response.data.id;
         onSave({ ...formData });
       })
       .catch((error) => {
@@ -50,7 +51,6 @@ const AddItemForm = ({ onSave, onCancel }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-        {selectedCategory}
       <div>
         <label htmlFor="name">Name:</label>
         <input
