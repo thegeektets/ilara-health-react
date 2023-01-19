@@ -8,6 +8,8 @@ const InventoryList = () => {
   const [editingItem, setEditingItem] = useState(null);
 
   useEffect(() => {
+    console.log("loading inventory products");
+    
     fetch("https://my-inventory-api.com/items")
       .then((res) => res.json())
       .then((data) => {

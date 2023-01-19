@@ -10,8 +10,6 @@ function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const location = useLocation();
-
   useEffect(() => {
     document.title = "Login : Ilara Pharmacy";
   }, []);
@@ -37,10 +35,7 @@ function LoginForm() {
         // Handle successful login
         dispatch(setLoggedIn(true));
         dispatch(setToken(response.data.token));
-
         // Redirect to inventory
-        location.pathname = "/inventory";
-
         dispatch(setCurrentPage('inventory'));
       })
       .catch((error) => {

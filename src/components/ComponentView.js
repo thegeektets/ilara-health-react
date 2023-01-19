@@ -5,11 +5,13 @@ import Checkout from "../checkout/components/Checkout";
 import Inventory from "../inventory/components/InventoryList";
 import Login from "../auth/components/Login";
 import Logout from "../auth/components/Logout";
+import { connect, useSelector } from "react-redux";
 
 const ComponentView = () => {
-  const [currentPage] = useState("login");
+  const currentPage = useSelector((state) => state.nav.currentPage);
   return (
     <div className="container mx-auto">
+      {currentPage}
       {currentPage === "login" && <Login />}
       {currentPage === "logout" && <Logout />}
 
@@ -21,4 +23,9 @@ const ComponentView = () => {
   );
 };
 
-export default ComponentView;
+const mapStateToProps = state => ({
+  currentPage: state.nav.currentPage,
+});
+
+
+export default connect(mapStateToProps)(ComponentView);
