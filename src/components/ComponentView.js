@@ -1,30 +1,35 @@
-import React, { } from "react";
+import React from "react";
 import Customers from "../customers/components/CustomerList";
 import Orders from "../orders/components/OrderList";
-import Checkout from "../checkout/components/Checkout";
 import Inventory from "../inventory/components/InventoryList";
 import Login from "../auth/components/Login";
-import Logout from "../auth/components/Logout";
 import { connect, useSelector } from "react-redux";
+import CompletedOrderList from "../orders/components/CompletedOrderList";
 
-const ComponentView = () => {
-  const currentPage = useSelector((state) => state.nav.currentPage);
-  return (
-    <div className="container mx-auto">
-      {currentPage === "login" && <Login />}
-      {currentPage === "logout" && <Logout />}
-
-      {currentPage === "customers" && <Customers />}
-      {currentPage === "orders" && <Orders />}
-      {currentPage === "inventory" && <Inventory />}
-      {currentPage === "checkout" && <Checkout />}
-    </div>
-  );
-};
-
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
+  loggedIn: state.auth.loggedIn,
   currentPage: state.nav.currentPage,
 });
 
+const ComponentView = () => {
+  const currentPage = useSelector((state) => state.nav.currentPage);
+  const loggedIn = useSelector((state) => state.auth.loggedIn);
+
+  return (
+    <div
+      className="container mx-auto"
+      style={{ float: "right", padding: "15px" }}
+    >
+      {currentPage === "" && !loggedIn ? <Login /> : ""}
+      {currentPage === "" && loggedIn ? <Inventory /> : ""}
+      {currentPage === "login" && <Login />}
+      {currentPage === "customers" && <Customers />}
+      {currentPage === "orders" && <Orders />}
+      {currentPage === "completed_orders" && <CompletedOrderList/>}
+
+      {currentPage === "inventory" && <Inventory />}
+    </div>
+  );
+};
 
 export default connect(mapStateToProps)(ComponentView);

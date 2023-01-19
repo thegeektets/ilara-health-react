@@ -2,11 +2,16 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { connect, useSelector, useDispatch } from "react-redux";
 import { setCurrentPage } from "../actions/navigationActions";
+import { setLoggedIn, setToken } from "../auth/actions/authActions";
 
 const mapStateToProps = (state) => ({
   loggedIn: state.auth.loggedIn,
   currentPage: state.nav.currentPage,
 });
+const mapDispatchToProps = {
+  setLoggedIn,
+  setToken,
+};
 
 const Navigation = () => {
   const dispatch = useDispatch();
@@ -14,16 +19,31 @@ const Navigation = () => {
   const currentPage = useSelector((state) => state.nav.currentPage);
   const loggedIn = useSelector((state) => state.auth.loggedIn);
 
+  const handleLogout = () => {
+    // Clear the token
+    localStorage.removeItem("token");
+    // Update the loggedIn state
+    dispatch(setLoggedIn(false));
+    dispatch(setToken(null));
+    // Redirect to inventory
+    dispatch(setCurrentPage("login"));
+  };
   return (
     <aside className="w-64" aria-label="Sidebar">
       <div className="px-3 py-4 overflow-y-auto rounded bg-gray-50 dark:bg-gray-800">
         <nav className="bg-gray-800">
           <ul className="space-y-4">
-            <li className="text-white">
-              <Link to="/">Home</Link>
-            </li>
             {loggedIn && (
               <div>
+                 <li className="text-white">
+                  <Link
+                    to="#"
+                    onClick={() => dispatch(setCurrentPage("customers"))}
+                    className={currentPage === "customers" ? "active" : ""}
+                  >
+                    Customers
+                  </Link>
+                </li>
                 <li className="text-white">
                   <Link
                     to="#"
@@ -39,31 +59,23 @@ const Navigation = () => {
                     onClick={() => dispatch(setCurrentPage("orders"))}
                     className={currentPage === "orders" ? "active" : ""}
                   >
-                    Orders
+                    New Orders
                   </Link>
                 </li>
                 <li className="text-white">
                   <Link
                     to="#"
-                    onClick={() => dispatch(setCurrentPage("customers"))}
-                    className={currentPage === "customers" ? "active" : ""}
+                    onClick={() => dispatch(setCurrentPage("completed_orders"))}
+                    className={currentPage === "orders" ? "active" : ""}
                   >
-                    Customers
+                    Completed Orders
                   </Link>
                 </li>
+               
                 <li className="text-white">
                   <Link
                     to="#"
-                    onClick={() => dispatch(setCurrentPage("checkout"))}
-                    className={currentPage === "checkout" ? "active" : ""}
-                  >
-                    Checkout
-                  </Link>
-                </li>
-                <li className="text-white">
-                  <Link
-                    to="#"
-                    onClick={() => dispatch(setCurrentPage("logout"))}
+                    onClick={() => handleLogout()}
                     className={currentPage === "logout" ? "active" : ""}
                   >
                     Logout
@@ -89,4 +101,4 @@ const Navigation = () => {
   );
 };
 
-export default connect(mapStateToProps)(Navigation);
+export default connect(mapStateToProps, mapDispatchToProps)(Navigation);

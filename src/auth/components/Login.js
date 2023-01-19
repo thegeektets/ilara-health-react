@@ -3,6 +3,16 @@ import axios from "axios";
 import { connect ,useDispatch} from 'react-redux';
 import { setLoggedIn, setToken  } from '../actions/authActions';
 import { setCurrentPage  } from '../../actions/navigationActions';
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated,
+  currentPage: state.nav.currentPage,
+  error: state.error
+});
+const mapDispatchToProps = {
+  setLoggedIn,
+  setToken,
+  setCurrentPage
+}
 
 function LoginForm() {
   const dispatch = useDispatch();
@@ -87,16 +97,7 @@ function LoginForm() {
 }
 
 
-const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated,
-  currentPage: state.nav.currentPage,
-  error: state.error
-});
-const mapDispatchToProps = {
-  setLoggedIn,
-  setToken,
-  setCurrentPage
-}
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
 

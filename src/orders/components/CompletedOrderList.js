@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import OrderForm from "./OrderForm";
 import axios from "axios";
 import OrderItem from "./OrderItem";
 
-function OrderList() {
+function CompletedOrderList() {
   const [orders, setOrders] = useState([]);
   const [showForm, setShowForm] = useState(false);
 
@@ -17,15 +16,7 @@ function OrderList() {
       .get("/order/orders/")
       .then((res) => {
         const items = res.data.filter((item) => {
-          if (!item.status) {
-            return new OrderItem(
-              item.id,
-              item.customer,
-              item.status,
-              item.price,
-              item.order_items
-            );
-          } else if (item.status && item.status.id === 1) {
+         if (item.status && item.status.id === 3) {
             return new OrderItem(
               item.id,
               item.customer,
@@ -35,7 +26,6 @@ function OrderList() {
             );
           } 
         });
-        console.log("items", items);
         if(items.length > 0) {
             setOrders(items);
         }   
@@ -102,14 +92,6 @@ function OrderList() {
   return (
     <div>
       <h2>Orders</h2>
-      <button
-        className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-red-600"
-        onClick={() => setShowForm(!showForm)}
-      >
-        {showForm ? "Hide Form" : "Add New"}
-      </button>
-      {showForm && <OrderForm handleNewOrder={handleNewOrder} />}
-
       <table className="table-auto mt-4">
         <thead>
           <tr>
@@ -118,7 +100,6 @@ function OrderList() {
             <th className="px-4 py-2">Price</th>
             <th className="px-4 py-2">Order Items</th>
             <th className="px-4 py-2">Status</th>
-            <th className="px-4 py-2">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -158,42 +139,11 @@ function OrderList() {
               <td className="border px-4 py-2">
                 {item.status ? item.status.name : "New"}
               </td>
-              <td>
-                <button
-                  className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600"
-                  onClick={(event) => {
-                    event.preventDefault();
-                    handleRemoveOrder(index);
-                  }}
-                >
-                  Remove
-                </button>
-              </td>
             </tr>
           ))}
         </tbody>
       </table>
-      <div
-        style={{
-          display: "inline-block",
-          fontWeight: "bold",
-          fontSize: "21px",
-          marginTop: "15px",
-        }}
-      >
-        Total : {getTotal()}
-      </div>
-      <button
-        style={{ float: "right", marginRight: "50px", marginTop: "15px" }}
-        className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
-        onClick={(event) => {
-          event.preventDefault();
-          checkoutOrders();
-        }}
-      >
-        Checkout Orders
-      </button>
     </div>
   );
 }
-export default OrderList;
+export default CompletedOrderList;
