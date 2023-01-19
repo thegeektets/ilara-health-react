@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from "react";
-import axios from 'axios';
+import axios from "axios";
+import { useLocation } from "react-router-dom";
+import { connect ,useDispatch} from 'react-redux';
+import { setLoggedIn, setToken  } from '../actions/authActions';
+import { setCurrentPage  } from '../../actions/navigationActions';
 
 function LoginForm() {
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const location = useLocation();
 
   useEffect(() => {
     document.title = "Login : Ilara Pharmacy";
@@ -27,8 +34,14 @@ function LoginForm() {
         password: password,
       })
       .then((response) => {
-        console.log(response);
         // Handle successful login
+        dispatch(setLoggedIn(true));
+        dispatch(setToken(response.data.token));
+
+        // Redirect to inventory
+        location.pathname = "/inventory";
+
+        dispatch(setCurrentPage('inventory'));
       })
       .catch((error) => {
         console.log(error);
@@ -39,6 +52,7 @@ function LoginForm() {
   return (
     <form className="bg-white p-6 rounded-lg" onSubmit={handleSubmit}>
       <h2 className="text-lg font-medium mb-4">Log in</h2>
+     
       <div className="mb-4">
         <label className="block text-gray-700 font-medium mb-2" htmlFor="email">
           Email
@@ -78,4 +92,17 @@ function LoginForm() {
   );
 }
 
-export default LoginForm;
+
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated,
+  currentPage: state.nav.currentPage,
+  error: state.error
+});
+const mapDispatchToProps = {
+  setLoggedIn,
+  setToken,
+  setCurrentPage
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
+

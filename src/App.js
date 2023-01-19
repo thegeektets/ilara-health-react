@@ -4,14 +4,15 @@ import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import ComponentView from "./components/ComponentView";
+import { connect, useSelector } from "react-redux";
 
 function App() {
-  const [currentPage, setCurrentPage] = useState("login");
+  const currentPage = useSelector((state) => state.nav.currentPage);
 
   return (
     <Router>
       <div className="bg-gray-200 min-h-screen flex">
-        <Navigation currentPage={currentPage} setCurrentPage={setCurrentPage} />
+        <Navigation currentPage={currentPage}/>
         <Routes>
           <Route
             path="/"
@@ -23,4 +24,10 @@ function App() {
   );
 }
 
-export default App;
+const mapStateToProps = state => ({
+  currentPage: state.nav.currentPage,
+});
+
+
+export default connect(mapStateToProps)(App);
+

@@ -1,6 +1,13 @@
-import { createStore } from 'redux';
-import inventoryReducer from './reducers/inventoryReducers';
+import { createStore, combineReducers } from 'redux'
+import authReducer from './auth/reducers/authReducer'
+import navReducer from './reducers/navigationReducer'
 
-const store = createStore(inventoryReducer);
+
+const rootReducer = combineReducers({
+  auth: authReducer,
+  nav: navReducer
+})
+
+const store = createStore(rootReducer)
 
 export default store;

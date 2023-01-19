@@ -1,36 +1,44 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import axios from 'axios';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { Provider } from "react-redux";
+import axios from "axios";
+import store  from "./store";
 
-axios.defaults.baseURL = 'http://127.0.0.1:8000';
-axios.defaults.headers.post['Content-Type'] = 'application/json';
+axios.defaults.baseURL = "http://127.0.0.1:8000";
+axios.defaults.headers.post["Content-Type"] = "application/json";
 
-axios.interceptors.request.use(request => {
+axios.interceptors.request.use(
+  (request) => {
     console.log(request);
     // Edit request config
     return request;
-}, error => {
+  },
+  (error) => {
     console.log(error);
     return Promise.reject(error);
-});
+  }
+);
 
-axios.interceptors.response.use(response => {
+axios.interceptors.response.use(
+  (response) => {
     console.log(response);
     // Edit response config
     return response;
-}, error => {
+  },
+  (error) => {
     console.log(error);
     return Promise.reject(error);
-});
+  }
+);
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
+  <Provider store={store}>
     <App />
-  </React.StrictMode>
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function
