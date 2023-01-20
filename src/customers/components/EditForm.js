@@ -38,9 +38,10 @@ const EditForm = ({ item, onSave, onCancel }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div>
+      <div className="mb-4">
         <label htmlFor="first_name">First Name:</label>
         <input
+          className="bg-gray-200 border border-gray-300 rounded-lg p-2 w-full"
           type="text"
           id="first_name"
           name="first_name"
@@ -48,9 +49,10 @@ const EditForm = ({ item, onSave, onCancel }) => {
           onChange={handleInputChange}
         />
       </div>
-      <div>
+      <div className="mb-4">
         <label htmlFor="last_name">Last Name:</label>
         <input
+          className="bg-gray-200 border border-gray-300 rounded-lg p-2 w-full"
           type="text"
           id="last_name"
           name="last_name"
@@ -58,9 +60,10 @@ const EditForm = ({ item, onSave, onCancel }) => {
           onChange={handleInputChange}
         />
       </div>
-      <div>
+      <div className="mb-4">
         <label htmlFor="email">Email:</label>
         <input
+          className="bg-gray-200 border border-gray-300 rounded-lg p-2 w-full"
           type="email"
           id="email"
           name="email"
@@ -68,9 +71,10 @@ const EditForm = ({ item, onSave, onCancel }) => {
           onChange={handleInputChange}
         />
       </div>
-      <div>
+      <div className="mb-4">
         <label htmlFor="phone">Phone:</label>
         <input
+          className="bg-gray-200 border border-gray-300 rounded-lg p-2 w-full"
           type="text"
           id="phone"
           name="phone"
@@ -78,17 +82,18 @@ const EditForm = ({ item, onSave, onCancel }) => {
           onChange={handleInputChange}
         />
       </div>
-
-      <button type="submit" className="bg-green-500 text-white p-2">
-        Save
-      </button>
-      <button
-        type="button"
-        onClick={onCancel}
-        className="bg-red-500 text-white p-2"
-      >
-        Cancel
-      </button>
+      <div className="mb-4">
+        <button type="submit" className="bg-green-500 text-white p-2">
+          Save
+        </button>
+        <button
+          type="button"
+          onClick={onCancel}
+          className="bg-red-500 text-white p-2"
+        >
+          Cancel
+        </button>
+      </div>
     </form>
   );
 };

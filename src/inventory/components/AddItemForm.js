@@ -50,10 +50,15 @@ const AddItemForm = ({ onSave, onCancel }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
+    <form
+      className="bg-white p-8 rounded-lg"
+      onSubmit={handleSubmit}
+      style={{ margin: "10px" }}
+    >
+      <div className="mb-4">
         <label htmlFor="name">Name:</label>
         <input
+          className="bg-gray-200 border border-gray-300 rounded-lg p-2 w-full"
           type="text"
           id="name"
           name="name"
@@ -61,9 +66,10 @@ const AddItemForm = ({ onSave, onCancel }) => {
           onChange={handleInputChange}
         />
       </div>
-      <div>
+      <div className="mb-4">
         <label htmlFor="description">Description:</label>
         <input
+          className="bg-gray-200 border border-gray-300 rounded-lg p-2 w-full"
           type="text"
           id="description"
           name="description"
@@ -71,9 +77,10 @@ const AddItemForm = ({ onSave, onCancel }) => {
           onChange={handleInputChange}
         />
       </div>
-      <div>
+      <div className="mb-4">
         <label htmlFor="price">Price:</label>
         <input
+          className="bg-gray-200 border border-gray-300 rounded-lg p-2 w-full"
           type="number"
           id="price"
           name="price"
@@ -81,9 +88,10 @@ const AddItemForm = ({ onSave, onCancel }) => {
           onChange={handleInputChange}
         />
       </div>
-      <div>
+      <div className="mb-4">
         <label htmlFor="quantity">Quantity:</label>
         <input
+          className="bg-gray-200 border border-gray-300 rounded-lg p-2 w-full"
           type="number"
           id="quantity"
           name="quantity"
@@ -91,10 +99,11 @@ const AddItemForm = ({ onSave, onCancel }) => {
           onChange={handleInputChange}
         />
       </div>
-      <div>
+      <div className="mb-4">
         <label>
           Category:
           <select
+            className="bg-gray-200 border border-gray-300 rounded-lg p-2 w-full"
             value={selectedCategory}
             onChange={(event) => setSelectedCategory(event.target.value)}
           >
@@ -110,16 +119,18 @@ const AddItemForm = ({ onSave, onCancel }) => {
         </label>
         <br />
       </div>
-      <button type="submit" className="bg-green-500 text-white p-2">
-        Save
-      </button>
-      <button
-        type="button"
-        onClick={onCancel}
-        className="bg-red-500 text-white p-2"
-      >
-        Cancel
-      </button>
+      <div className="mb-4">
+        <button type="submit" className="bg-green-500 text-white p-2">
+          Save
+        </button>
+        <button
+          type="button"
+          onClick={onCancel}
+          className="bg-red-500 text-white p-2"
+        >
+          Cancel
+        </button>
+      </div>
     </form>
   );
 };

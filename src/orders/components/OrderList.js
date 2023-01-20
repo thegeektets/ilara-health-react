@@ -33,12 +33,12 @@ function OrderList() {
               item.price,
               item.order_items
             );
-          } 
+          }
         });
         console.log("items", items);
-        if(items.length > 0) {
-            setOrders(items);
-        }   
+        if (items.length > 0) {
+          setOrders(items);
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -54,6 +54,7 @@ function OrderList() {
       orderItems.order_items
     );
     setOrders([...orders, item]);
+    setShowForm(false);
   };
   const getTotal = () => {
     let total = 0;
@@ -65,7 +66,7 @@ function OrderList() {
   const checkoutOrders = () => {
     const requestBody = {
       orders: orders,
-      customer: orders[0]['customer'] ? orders[0]['customer']['id']: null,
+      customer: orders[0]["customer"] ? orders[0]["customer"]["id"] : null,
       total_price: getTotal(),
     };
 
@@ -76,8 +77,8 @@ function OrderList() {
         console.log(response);
         // Handle the successful response here
         setOrders([]);
-        setShowForm(false)
-    })
+        setShowForm(false);
+      })
       .catch((error) => {
         console.error(error);
         // Handle the error here
@@ -101,16 +102,35 @@ function OrderList() {
 
   return (
     <div>
-      <h2>Orders</h2>
+      <h1
+        style={{
+          fontSize: "20px",
+          fontWeight: "bold",
+          marginTop: "15px",
+          float: "left",
+          color: "rgb(59 130 246)",
+        }}
+      >
+        New Orders
+      </h1>
       <button
         className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-red-600"
+        style={{ float: "right", marginBottom: "15px" }}
         onClick={() => setShowForm(!showForm)}
       >
         {showForm ? "Hide Form" : "Add New"}
       </button>
-      {showForm && <OrderForm handleNewOrder={handleNewOrder} />}
 
-      <table className="table-auto mt-4">
+      {showForm && (
+        <div style={{ margin: "15px", float: "left", width: "80%" }}>
+          <OrderForm handleNewOrder={handleNewOrder} />
+        </div>
+      )}
+
+      <table
+        className="table-auto"
+        style={{ width: "100%", marginBottom: "20px" }}
+      >
         <thead>
           <tr>
             <th className="px-4 py-2">ID</th>
@@ -122,55 +142,56 @@ function OrderList() {
           </tr>
         </thead>
         <tbody>
-          {orders.length > 0 && orders.map((item, index) => (
-            <tr key={item.id} className="bg-white">
-              <td className="border px-4 py-2">{item.id}</td>
-              <td className="border px-4 py-2">
-                {item.customer
-                  ? `${item.customer.first_name} ${item.customer.last_name}`
-                  : ""}
-              </td>
-              <td className="border px-4 py-2">{item.price}</td>
-              <td className="border px-4 py-2">
-                {Array.isArray(item.order_items) ? (
-                  <table>
-                    <thead>
-                      <tr>
-                        <th>Product</th>
-                        <th>Quantity</th>
-                        <th>Price</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {item.order_items.map((item, index) => (
-                        <tr key={index}>
-                          <td>{item.product.name}</td>
-                          <td>{item.quantity}</td>
-                          <td>{item.product.price * item.quantity}</td>
+          {orders.length > 0 &&
+            orders.map((item, index) => (
+              <tr key={item.id} className="bg-white">
+                <td className="border px-4 py-2">{item.id}</td>
+                <td className="border px-4 py-2">
+                  {item.customer
+                    ? `${item.customer.first_name} ${item.customer.last_name}`
+                    : ""}
+                </td>
+                <td className="border px-4 py-2">{item.price}</td>
+                <td className="border px-4 py-2">
+                  {Array.isArray(item.order_items) ? (
+                    <table style={{ width: "100%", marginBottom: "20px" }}>
+                      <thead style={{ textAlign: "left", color:'rgb(59, 130, 246)' }}>
+                        <tr>
+                          <th>Product</th>
+                          <th>Quantity</th>
+                          <th>Price</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                ) : (
-                  <div>Order items not available</div>
-                )}
-              </td>
-              <td className="border px-4 py-2">
-                {item.status ? item.status.name : "New"}
-              </td>
-              <td>
-                <button
-                  className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600"
-                  onClick={(event) => {
-                    event.preventDefault();
-                    handleRemoveOrder(index);
-                  }}
-                >
-                  Remove
-                </button>
-              </td>
-            </tr>
-          ))}
+                      </thead>
+                      <tbody>
+                        {item.order_items.map((item, index) => (
+                          <tr key={index}>
+                            <td>{item.product.name}</td>
+                            <td>{item.quantity}</td>
+                            <td>{item.product.price * item.quantity}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  ) : (
+                    <div>Order items not available</div>
+                  )}
+                </td>
+                <td className="border px-4 py-2">
+                  {item.status ? item.status.name : "New"}
+                </td>
+                <td>
+                  <button
+                    className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600"
+                    onClick={(event) => {
+                      event.preventDefault();
+                      handleRemoveOrder(index);
+                    }}
+                  >
+                    Remove
+                  </button>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
       <div

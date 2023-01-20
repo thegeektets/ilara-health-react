@@ -64,6 +64,7 @@ const EditForm = ({ item, onSave, onCancel }) => {
       <label>
         Name:
         <input
+          className="bg-gray-200 border border-gray-300 rounded-lg p-2 w-full"
           type="text"
           name="name"
           value={formData.name}
@@ -74,6 +75,7 @@ const EditForm = ({ item, onSave, onCancel }) => {
       <label>
         Description:
         <input
+          className="bg-gray-200 border border-gray-300 rounded-lg p-2 w-full"
           name="description"
           type="text"
           value={formData.description}
@@ -84,6 +86,7 @@ const EditForm = ({ item, onSave, onCancel }) => {
       <label>
         Price:
         <input
+          className="bg-gray-200 border border-gray-300 rounded-lg p-2 w-full"
           name="price"
           type="number"
           value={formData.price}
@@ -94,6 +97,7 @@ const EditForm = ({ item, onSave, onCancel }) => {
       <label>
         Quantity:
         <input
+          className="bg-gray-200 border border-gray-300 rounded-lg p-2 w-full"
           name="quantity"
           type="number"
           value={formData.quantity}
@@ -104,6 +108,7 @@ const EditForm = ({ item, onSave, onCancel }) => {
       <label>
         Category:
         <select
+          className="bg-gray-200 border border-gray-300 rounded-lg p-2 w-full"
           name="category"
           value={formData.category}
           onChange={handleInputChange}
@@ -119,6 +124,8 @@ const EditForm = ({ item, onSave, onCancel }) => {
         </select>
       </label>
       <br />
+      <br />
+
       <button type="submit" className="bg-green-500 text-white p-2">
         Save
       </button>

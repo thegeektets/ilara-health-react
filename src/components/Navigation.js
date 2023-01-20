@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { connect, useSelector, useDispatch } from "react-redux";
 import { setCurrentPage } from "../actions/navigationActions";
 import { setLoggedIn, setToken } from "../auth/actions/authActions";
+import './nav.css';
 
 const mapStateToProps = (state) => ({
   loggedIn: state.auth.loggedIn,
@@ -30,9 +31,9 @@ const Navigation = () => {
   };
   return (
     <aside className="w-64" aria-label="Sidebar">
-      <div className="px-3 py-4 overflow-y-auto rounded bg-gray-50 dark:bg-gray-800">
+      <div className="px-3 py-4 overflow-y-auto rounded bg-gray-50 dark:bg-gray-800" style={{minHeight:'100%', marginTop:'15px'}}>
         <nav className="bg-gray-800">
-          <ul className="space-y-4">
+          <ul className="space-y-5">
             {loggedIn && (
               <div>
                  <li className="text-white">
@@ -66,7 +67,7 @@ const Navigation = () => {
                   <Link
                     to="#"
                     onClick={() => dispatch(setCurrentPage("completed_orders"))}
-                    className={currentPage === "orders" ? "active" : ""}
+                    className={currentPage === "completed_orders" ? "active" : ""}
                   >
                     Completed Orders
                   </Link>

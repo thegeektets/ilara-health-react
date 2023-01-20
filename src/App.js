@@ -1,7 +1,6 @@
 import React, {  } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navigation from "./components/Navigation";
-import Footer from "./components/Footer";
 import Header from "./components/Header";
 import ComponentView from "./components/ComponentView";
 import { connect, useSelector } from "react-redux";
@@ -11,6 +10,7 @@ function App() {
 
   return (
     <Router>
+      <Header/>
       <div className="bg-gray-200 min-h-screen flex">
         <Navigation currentPage={currentPage}/>
         <Routes>

@@ -36,10 +36,21 @@ const AddItemForm = ({ onSave, onCancel }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="first_name">First Name:</label>
+    <form
+      className="bg-white p-8 rounded-lg"
+      onSubmit={handleSubmit}
+      style={{ margin: "10px"}}
+    >
+      <h2 className="text-md font-medium mb-4">New Customer</h2>
+      <div className="mb-4">
+        <label
+          className="block text-gray-700 font-medium mb-2"
+          htmlFor="first_name"
+        >
+          First Name :{" "}
+        </label>
         <input
+          className="bg-gray-200 border border-gray-300 rounded-lg p-2 w-full"
           type="text"
           id="first_name"
           name="first_name"
@@ -47,9 +58,15 @@ const AddItemForm = ({ onSave, onCancel }) => {
           onChange={handleInputChange}
         />
       </div>
-      <div>
-        <label htmlFor="last_name">Last Name:</label>
+      <div className="mb-4">
+        <label
+          className="block text-gray-700 font-medium mb-2"
+          htmlFor="last_name"
+        >
+          Last Name:
+        </label>
         <input
+          className="bg-gray-200 border border-gray-300 rounded-lg p-2 w-full"
           type="text"
           id="last_name"
           name="last_name"
@@ -57,9 +74,12 @@ const AddItemForm = ({ onSave, onCancel }) => {
           onChange={handleInputChange}
         />
       </div>
-      <div>
-        <label htmlFor="email">Email:</label>
+      <div className="mb-4">
+        <label className="block text-gray-700 font-medium mb-2" htmlFor="email">
+          Email:
+        </label>
         <input
+          className="bg-gray-200 border border-gray-300 rounded-lg p-2 w-full"
           type="email"
           id="email"
           name="email"
@@ -67,9 +87,12 @@ const AddItemForm = ({ onSave, onCancel }) => {
           onChange={handleInputChange}
         />
       </div>
-      <div>
-        <label htmlFor="phone">Phone:</label>
+      <div className="mb-4">
+        <label className="block text-gray-700 font-medium mb-2" htmlFor="phone">
+          Phone:
+        </label>
         <input
+          className="bg-gray-200 border border-gray-300 rounded-lg p-2 w-full"
           type="text"
           id="phone"
           name="phone"
@@ -77,17 +100,18 @@ const AddItemForm = ({ onSave, onCancel }) => {
           onChange={handleInputChange}
         />
       </div>
-
-      <button type="submit" className="bg-green-500 text-white p-2">
-        Save
-      </button>
-      <button
-        type="button"
-        onClick={onCancel}
-        className="bg-red-500 text-white p-2"
-      >
-        Cancel
-      </button>
+      <div className="mb-4">
+        <button type="submit" className="bg-green-500 text-white p-2">
+          Save
+        </button>
+        <button
+          type="button"
+          onClick={onCancel}
+          className="bg-red-500 text-white p-2"
+        >
+          Cancel
+        </button>
+      </div>
     </form>
   );
 };

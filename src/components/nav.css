@@ -1,0 +1,12 @@
+ul li {
+  font-size: 14px;
+  text-transform: uppercase;
+  margin-left: 5px;
+  margin-bottom: 10px;
+}
+
+ul li :hover,
+ul li .active {
+  font-weight: bold;
+  color: rgb(59 130 246);
+}

@@ -54,7 +54,7 @@ function LoginForm() {
   }
 
   return (
-    <form className="bg-white p-6 rounded-lg" onSubmit={handleSubmit}>
+    <form className="bg-white p-6 rounded-lg" onSubmit={handleSubmit} style={{margin:'10%'}}>
       <h2 className="text-lg font-medium mb-4">Log in</h2>
      
       <div className="mb-4">

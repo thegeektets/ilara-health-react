@@ -109,48 +109,48 @@ function OrderForm({ handleNewOrder }) {
     <form className="bg-white p-6 rounded-lg shadow-md" onSubmit={handleSubmit}>
       <h3 className="text-lg font-medium mb-4">New Order</h3>
       <div className="mb-4">
-        <label
-          className="block text-gray-700 font-medium mb-2"
-          htmlFor="order-items"
+        <label htmlFor="product">Product:</label>
+        <select
+          className="bg-gray-200 border border-gray-300 rounded-lg p-2 w-full"
+          id="product"
+          name="product"
+          onChange={handleProductChange}
         >
-          Order Items:
-        </label>
-        <div>
-          <div>
-            <label htmlFor="product">Product:</label>
-            <select id="product" name="product" onChange={handleProductChange}>
-              <option></option>
-              {products.map((product) => (
-                <option key={product.id} value={JSON.stringify(product)}>
-                  {product.name}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <label htmlFor="quantity">Quantity:</label>
-            <input
-              type="number"
-              id="quantity"
-              name="quantity"
-              value={newProduct.quantity}
-              onChange={handleProductChange}
-            />
-          </div>
-          <button
-            className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-red-600"
-            type="submit"
-            onClick={(event) => {
-              event.preventDefault();
-              handleProductAdd();
-            }}
-          >
-            Add
-          </button>
-        </div>
+          <option></option>
+          {products.map((product) => (
+            <option key={product.id} value={JSON.stringify(product)}>
+              {product.name}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className="mb-4">
+        <label htmlFor="quantity">Quantity:</label>
+        <input
+          className="bg-gray-200 border border-gray-300 rounded-lg p-2 w-full"
+          type="number"
+          id="quantity"
+          name="quantity"
+          value={newProduct.quantity}
+          onChange={handleProductChange}
+        />
+      </div>
+      <div className="mb-4">
+        <button
+          className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-red-600"
+          type="submit"
+          onClick={(event) => {
+            event.preventDefault();
+            handleProductAdd();
+          }}
+        >
+          Add
+        </button>
+      </div>
+      <div className="mb-4">
         {formData.order_items && formData.order_items.length > 0 && (
-          <table>
-            <thead>
+          <table style={{width:'100%'}}>
+            <thead style={{textAlign:'left'}}>
               <tr>
                 <th>Product</th>
                 <th>Quantity</th>
@@ -193,6 +193,8 @@ function OrderForm({ handleNewOrder }) {
           Customer:
         </label>
         <select
+          className="bg-gray-200 border border-gray-300 rounded-lg p-2 w-full"
+
           id="customer"
           name="customer"
           value={formData.customer}

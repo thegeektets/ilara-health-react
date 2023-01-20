@@ -77,16 +77,32 @@ const CustomerList = () => {
 
   return (
     <div>
-      <h1>Customer List</h1>
-      <button className="bg-green-500 text-white p-2" onClick={handleAdd}>
+      <h1
+        style={{
+          fontSize: "20px",
+          fontWeight: "bold",
+          marginTop: "15px",
+          float: "left",
+          color: 'rgb(59 130 246)'
+        }}
+      >
+        Customer List
+      </h1>
+      <button
+        className="bg-blue-500 text-white p-2"
+        onClick={handleAdd}
+        style={{ float: "right", marginBottom: "15px" }}
+      >
         Add New
       </button>
       {showForm && (
-        <AddItemForm onSave={handleSaveNewItem} onCancel={handleCancel} />
+        <div style={{float:'left', margin:'20px', padding:'10px'}}>
+            <AddItemForm onSave={handleSaveNewItem} onCancel={handleCancel} />
+        </div>
       )}
 
       {inventory.length ? (
-        <table className="table-auto">
+        <table className="table-auto" style={{ width: "100%" }}>
           <thead>
             <tr className="bg-gray-200">
               <th className="px-4 py-2">ID</th>
