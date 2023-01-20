@@ -3,6 +3,8 @@ import axios from "axios";
 import { connect ,useDispatch} from 'react-redux';
 import { setLoggedIn, setToken  } from '../actions/authActions';
 import { setCurrentPage  } from '../../actions/navigationActions';
+import Swal from 'sweetalert2'
+
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
   currentPage: state.nav.currentPage,
@@ -49,6 +51,15 @@ function LoginForm() {
       })
       .catch((error) => {
         console.log(error);
+        Swal.fire({
+          width:'300px',
+          heightAuto: false,
+          position:'top-center',
+          text: error.message,
+          icon: 'error',
+          timer: 2000,
+          showCloseButton: false
+        })
         // Handle login error
       });
   }

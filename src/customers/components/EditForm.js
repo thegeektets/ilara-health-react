@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import Swal from 'sweetalert2'
 
 const EditForm = ({ item, onSave, onCancel }) => {
   const [id] = useState(item.id);
@@ -32,6 +33,15 @@ const EditForm = ({ item, onSave, onCancel }) => {
       })
       .catch((error) => {
         console.log(error);
+        Swal.fire({
+          width:'300px',
+          heightAuto: false,
+          position:'top-center',
+          text: error.message,
+          icon: 'error',
+          timer: 2000,
+          showCloseButton: false
+        })
       });
     onSave({ ...formData });
   };

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import OrderForm from "./OrderForm";
 import axios from "axios";
 import OrderItem from "./OrderItem";
+import Swal from 'sweetalert2'
 
 function OrderList() {
   const [orders, setOrders] = useState([]);
@@ -78,9 +79,27 @@ function OrderList() {
         // Handle the successful response here
         setOrders([]);
         setShowForm(false);
+        Swal.fire({
+            width:'300px',
+            heightAuto: false,
+            position:'top-center',
+            text: 'Order checked out successfully',
+            icon: 'success',
+            timer: 2000,
+            showCloseButton: false
+          })
       })
       .catch((error) => {
         console.error(error);
+        Swal.fire({
+            width:'300px',
+            heightAuto: false,
+            position:'top-center',
+            text: error.message,
+            icon: 'error',
+            timer: 2000,
+            showCloseButton: false
+          })
         // Handle the error here
       });
   };

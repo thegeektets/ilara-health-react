@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import Swal from 'sweetalert2'
 
 function OrderForm({ handleNewOrder }) {
   const [newProduct, setNewProduct] = useState({ product: "", quantity: "" });
@@ -102,6 +103,15 @@ function OrderForm({ handleNewOrder }) {
       })
       .catch((error) => {
         console.log(error);
+        Swal.fire({
+            width:'300px',
+            heightAuto: false,
+            position:'top-center',
+            text: error.message,
+            icon: 'error',
+            timer: 2000,
+            showCloseButton: false
+          })
       });
   };
 
