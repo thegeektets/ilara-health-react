@@ -7,7 +7,7 @@ import { Provider } from "react-redux";
 import axios from "axios";
 import store  from "./store";
 
-axios.defaults.baseURL = "http://127.0.0.1:8000";
+axios.defaults.baseURL = "https://griffinmuteti.pythonanywhere.com/";
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
 axios.interceptors.request.use(
